@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package rates.v1;
+
+option go_package = "github.com/Lim0os/price-oracle/proto/rates/v1;ratesv1";
+
+import "google/protobuf/timestamp.proto";
+
+service RatesService {
+  rpc GetRates(GetRatesRequest) returns (GetRatesResponse);
+  rpc Healthcheck(HealthcheckRequest) returns (HealthcheckResponse);
+}
+
+message GetRatesRequest {
+  string strategy = 1; // topN | avgNM
+  int32 n = 2;
+  int32 m = 3;
+}
+
+message GetRatesResponse {
+  string ask = 1;
+  string bid = 2;
+  google.protobuf.Timestamp fetched_at = 3;
+}
+
+message HealthcheckRequest {}
+
+message HealthcheckResponse {
+  string status = 1;
+}
